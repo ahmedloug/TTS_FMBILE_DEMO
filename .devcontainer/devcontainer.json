@@ -1,0 +1,23 @@
+{
+  "name": "RAG0 Development Container",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "rag0",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-azuretools.vscode-containers",
+        "ms-python.debugpy",
+        "grapecity.gc-excelviewer",
+        "mechatroner.rainbow-csv",
+        "littlefoxteam.vscode-python-test-adapter",
+        "ms-toolsai.jupyter"
+      ]
+    }
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/app,type=bind"
+  ]
+}

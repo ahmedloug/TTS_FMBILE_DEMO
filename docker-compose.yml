@@ -1,0 +1,45 @@
+services:
+  chromadb:
+    image: chromadb/chroma
+    container_name: chromadb
+    volumes:
+      - chroma_data:/chroma/.chroma/index
+    networks:
+      - rag_network
+
+  rag0:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    command: sleep infinity  # Garde le conteneur en vie
+    environment:
+      - CHROMA_HOST=http://chromadb:8000
+      - OLLAMA=http://ollama:11434  
+    container_name: rag0
+    ports:
+      - "8501:8501"
+    depends_on:
+      - chromadb
+      - ollama 
+    networks:
+      - rag_network
+
+  ollama:
+    # image: louug/ollama-custom:latest
+    image: ollama/ollama:latest
+    container_name: ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - rag_network
+
+networks:
+  rag_network:
+
+volumes:
+  chroma_data:
