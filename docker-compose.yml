@@ -16,6 +16,13 @@ services:
       - CHROMA_HOST=http://chromadb:8000
       - OLLAMA=http://ollama:11434  
     container_name: rag0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
     ports:
       - "8501:8501"
     depends_on:

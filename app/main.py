@@ -34,7 +34,7 @@ def process_input(urls, question):
             base_url=ollama_url
         ),
     )
-    retriever = vectorstore.as_retriever()
+    retriever = vectorstore.as_retriever()  # Precisez le contexte 
     
     # RAG prompt and chain
     after_rag_template = """Réponds à la question en te basant uniquement sur le contexte suivant. 
