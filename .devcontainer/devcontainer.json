@@ -1,0 +1,37 @@
+{
+  "name": "TTS_API",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "runArgs": [
+    "--gpus=all",
+    "--device=/dev/snd",
+    "-e", 
+    "PULSE_SERVER=unix:/tmp/pulse-socket",
+    "-p=YOURIPADRESS:8000:8000",
+    "-p=YOURIPADRESS:9696:9696"
+  ],
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-azuretools.vscode-containers",
+        "littlefoxteam.vscode-python-test-adapter"
+
+      ]
+    }
+  },
+  
+  "forwardPorts": [8000, 9696],
+
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/app,type=bind,consistency=cached",
+    "type=bind,source=/run/user/1000/pulse/native,target=/tmp/pulse-socket"
+  ],
+  "remoteUser": "root"
+}
+
+
+// https://github.com/orgs/community/discussions/13473 CE TRUC A PERMIT D'OUVRIR LES PORTS SUR LA MACHINE HOTE
